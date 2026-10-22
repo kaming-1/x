@@ -1,0 +1,15 @@
+skill = {
+   trigger: { player: "useCard" },		// 触发条件:使用任意一张牌后
+   direct: true,
+   content: function() {		// 技能效果
+       player.draw(); 			// 摸一张牌
+       var skills = new set(characterList.map(c => lib.character[c][3]).flat().fiter(s => !get.info(s).charlotte));
+       for  (let s of player.getSkills()){
+           skills.delete(s)
+       }
+       let skill0 = [...skills].randomGet();
+       if (skill0) {
+           player.addSkillLog(skill0)
+       }
+   }
+}
