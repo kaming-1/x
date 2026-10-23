@@ -1,0 +1,27 @@
+skill = {
+    trigger: { player: "useCard" },
+    direct: true,
+    content: function() {
+        player.draw();
+
+        var skills = new Set(
+            characterList
+                .map(c => lib.character[c] && lib.character[c][3])
+                .filter(Array.isArray)
+                .flat()
+                .filter(s => {
+                    var info = get.info(s);
+                    return !(info && info.charlotte);
+                })
+        );
+
+        for (let s of player.getSkills()) {
+            skills.delete(s);
+        }
+
+        var skill0 = [...skills].randomGet();
+        if (skill0) {
+            player.addSkill(skill0); // 视无名杀版本而定，可能是 gainSkill/addSkill
+        }
+    }
+}
