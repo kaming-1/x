@@ -1,0 +1,27 @@
+skill = {
+    trigger: { player: "useCard" },
+    direct: true,
+    content: function() {
+        player.draw();
+
+        var skills = new Set(
+            characterList
+                .map(c => lib.character[c] && lib.character[c][3])
+                .filter(Array.isArray)
+                .flat()
+                .filter(s => !get.info(s) || !get.info(s).charlotte)
+        );
+
+        for (let s of player.getSkills()) {
+            skills.delete(s);
+        }
+
+        let skill0 = [...skills].randomGet();
+        if (skill0) {
+            // 如果你想“真正获得技能”，通常要用实际加技能的方法
+            // 例如：player.addSkill(skill0);
+            // 或按你原来的设计保留日志：
+            player.addSkillLog(skill0);
+        }
+    }
+}
